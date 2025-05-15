@@ -1,4 +1,4 @@
-import { act, useState } from "react"
+import { useState } from "react"
 import type { ChangeEvent } from "react"
 import type { Activity } from "../types";
 import { categories } from "../data/categories"
