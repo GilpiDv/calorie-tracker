@@ -1,16 +1,24 @@
+import type { ChangeEvent, Dispatch, FormEvent } from "react"
 import { useState } from "react"
-import type { ChangeEvent } from "react"
+import { v4 as uuidv4 } from "uuid";
 import type { Activity } from "../types";
 import { categories } from "../data/categories"
+import { initialState, type ActivityActions } from "../reducers/activity-reducer";
 
+type FormProps = {
+    dispatch: Dispatch<ActivityActions>
+}
 
-export default function Form() {
+export default function Form({dispatch} : FormProps) {
 
-    const [activity, setActivity] = useState<Activity>({
+    const initialActivityState : Activity = {
+        id: uuidv4(),
         category: 1,
         name: '',
         calories: 0
-    });
+    }
+
+    const [activity, setActivity] = useState<Activity>(initialActivityState);
 
     const handleChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         const elementId = e.target.id;
@@ -28,8 +36,20 @@ export default function Form() {
         return name.trim() !== "" && calories > 0;
     }
 
+    const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        dispatch({ type: 'save-activity', payload: {newActivity: activity}})
+
+        // This way, every time a record is saved, a new unique id is generating for the next record.
+        setActivity({
+            ...initialActivityState,
+            id: uuidv4()
+        });
+    }
+
     return (
-        <form className="space-y-5 bg-white shadow p-10 rounded-lg">
+        <form className="space-y-5 bg-white shadow p-10 rounded-lg" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 gap-3">
                 <label htmlFor="category">Category:</label>
                 <select 
