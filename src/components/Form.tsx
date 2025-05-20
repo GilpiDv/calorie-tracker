@@ -3,7 +3,7 @@ import { useState } from "react"
 import { v4 as uuidv4 } from "uuid";
 import type { Activity } from "../types";
 import { categories } from "../data/categories"
-import { initialState, type ActivityActions } from "../reducers/activity-reducer";
+import type { ActivityActions } from "../reducers/activity-reducer";
 
 type FormProps = {
     dispatch: Dispatch<ActivityActions>
