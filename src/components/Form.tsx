@@ -82,7 +82,7 @@ export default function Form({dispatch, state} : FormProps) {
                     value={activity.name}
                     onChange={handleChange}
                     className="border border-slate-300 p-2 rounded-lg"
-                    placeholder="e.g. Food, Orange Juice, Salad, Exercises, Lift-Ups, Bicycle..."
+                    placeholder="e.g. Food: Orange Juice, Salad. Exercises: Lift-Ups, Bicycle."
                 />
             </div>
 
