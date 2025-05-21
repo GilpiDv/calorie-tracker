@@ -1,6 +1,4 @@
-import { act } from "react"
 import type { Activity } from "../types"
-import { ReceiptRefundIcon } from "@heroicons/react/24/outline"
 
 export type ActivityActions = 
 { type: 'save-activity', payload: { newActivity : Activity} } |
