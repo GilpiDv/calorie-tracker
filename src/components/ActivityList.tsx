@@ -19,6 +19,11 @@ export default function ActivityList({activities, dispatch} : ActivityListProps)
 
     const isEmptyActivities = useMemo(() => activities.length === 0, [activities]);
 
+    const handleEditButton = (id: Activity['id']) => {
+        dispatch({type: 'set-activeId', payload: {id: id} });
+        document.getElementById("category")?.focus();
+    }
+
     return (
         <>
             <h2 className="text-4xl font-bold text-slate-600 text-center">
@@ -45,14 +50,14 @@ export default function ActivityList({activities, dispatch} : ActivityListProps)
                             </p>
                         </div>
                         <div className="flex gap-5 items-center">
-                            <button onClick={() => dispatch({type: 'set-activeId', payload: {id: activity.id} })}>
+                            <button onClick={() => handleEditButton(activity.id)}>
                                 <PencilSquareIcon 
-                                    className="h-8 w-8 text-gray-800"
+                                    className="h-8 w-8 text-gray-800 cursor-pointer"
                                 />
                             </button>
                             <button onClick={() => dispatch({type: 'delete-activity', payload: {id: activity.id} })}>
                                 <TrashIcon 
-                                    className="h-8 w-8 text-red-600"
+                                    className="h-8 w-8 text-red-600 cursor-pointer"
                                 />
                             </button>
                         </div>
