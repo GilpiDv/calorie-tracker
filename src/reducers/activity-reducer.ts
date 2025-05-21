@@ -1,9 +1,12 @@
+import { act } from "react"
 import type { Activity } from "../types"
+import { ReceiptRefundIcon } from "@heroicons/react/24/outline"
 
 export type ActivityActions = 
 { type: 'save-activity', payload: { newActivity : Activity} } |
 { type: 'set-activeId', payload: { id : Activity['id']} } |
-{ type: 'delete-activity', payload: { id : Activity['id']} }
+{ type: 'delete-activity', payload: { id : Activity['id']} } |
+{ type: 'restart-app' }
 
 
 export type ActivityState = {
@@ -11,8 +14,14 @@ export type ActivityState = {
     activeId: Activity['id']
 }
 
+const localStorageActivities = () : Activity[] => {
+    const activities = localStorage.getItem('activities');
+
+    return activities ? JSON.parse(activities) : [];
+}
+
 export const initialState : ActivityState = {
-    activities: [], 
+    activities: localStorageActivities(), 
     activeId: ''
 }   
 
@@ -49,6 +58,13 @@ export const activityReducer = (
         return {
             ...state,
             activities: state.activities.filter(activity => activity.id !== actions.payload.id)
+        }
+    }
+
+    if(actions.type === 'restart-app') {
+        return {
+            activities: [],
+            activeId: ''
         }
     }
 
